@@ -12,15 +12,14 @@ public class LocationExternalServiceImpl implements LocationExternalService {
 
     private final RestTemplate restTemplate;
 
-    public LocationExternalServiceImpl(RestTemplate restTemplate){
+    public LocationExternalServiceImpl(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
     @Override
     public List<String> getLocations() {
-        restTemplate.exchange("http://localhost:8082/server-api/v1/locations",
+        return restTemplate.exchange("http://localhost:8082/server-api/v1/locations",
                 HttpMethod.GET, null, new ParameterizedTypeReference<List<String>>() {
-                });
-        return null;
+                }).getBody();
     }
 }
