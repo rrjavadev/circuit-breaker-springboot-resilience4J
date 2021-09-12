@@ -1,2 +1,69 @@
 server:
-  port: 8081
+  port: 8082
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      orderService:
+        registerHealthIndicator: true
+        eventConsumerBufferSize: 10
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        failureRateThreshold: 50
+        minimumNumberOfCalls: 5
+        permittedNumberOfCallsInHalfOpenState: 3
+        slidingWindowSize: 10
+        waitDurationInOpenState: 5s
+        slidingWindowType: COUNT_BASED
+resilience4j.ratelimiter:
+  instances:
+    orderService:
+      limitForPeriod: 2
+      limitRefreshPeriod: 4s
+      timeoutDuration: 10s
+      registerHealthIndicator: true
+      eventConsumerBufferSize: 100
+resilience4j.retry:
+  instances:
+    orderService:
+      maxRetryAttempts: 3
+      waitDuration: 11000
+
+resilience4j.bulkhead:
+  instances:
+    orderService:
+      maxWaitDuration: 5000
+      maxConcurrentCalls: 5
+
+resilience4j.thread-pool-bulkhead:
+  instances:
+    orderService:
+      maxThreadPoolSize: 1
+      coreThreadPoolSize: 1
+      queueCapacity: 1
+
+management:
+  metrics:
+    tags:
+      application: ${spring.application.name}
+    distribution:
+      percentiles-histogram:
+        resilience4j:
+          circuitbreaker:
+            calls: true
+        http:
+           server:
+              requests: true
+  health:
+    diskspace:
+      enabled: true
+    ratelimiters:
+      enabled: true
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always

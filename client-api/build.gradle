@@ -13,11 +13,24 @@ repositories {
     mavenCentral()
 }
 
+ext{
+    resilience4jVersion = '1.4.0'
+}
+
 dependencies {
+    compile('org.springframework.boot:spring-boot-starter-webflux')
+    compile('org.springframework.boot:spring-boot-starter-actuator')
+    compile('org.springframework.boot:spring-boot-starter-aop')
     compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-circuitbreaker-resilience4j', version: '1.0.2.RELEASE'
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    testImplementation('org.springframework.boot:spring-boot-starter-test') {
-        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-    }
+
+    compile("io.github.resilience4j:resilience4j-spring-boot2:${resilience4jVersion}")
+    compile("io.github.resilience4j:resilience4j-all:${resilience4jVersion}") // Optional, only required when you want to use the Decorators class
+    compile("io.github.resilience4j:resilience4j-reactor:${resilience4jVersion}")
+    compile("io.micrometer:micrometer-registry-prometheus")
+
+    compile 'de.codecentric:chaos-monkey-spring-boot:2.1.1'
+
+    compile("io.vavr:vavr-jackson:0.10.0")
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('io.projectreactor:reactor-test')
 }
