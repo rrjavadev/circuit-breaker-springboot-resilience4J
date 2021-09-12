@@ -1,5 +1,5 @@
-# circuit-breaker-springboot-resilience4J
-Sample project implementing circuit breaker pattern using spring-boot and resilience4j
+# resilience4J-springboot
+Sample project implementing circuit breaker, bulkhead, retry and rate limiter fault tolerant patterns using spring-boot and resilience4j
 
 ## How to build?
 Run ./gradlew clean build (on Linux based OS)
