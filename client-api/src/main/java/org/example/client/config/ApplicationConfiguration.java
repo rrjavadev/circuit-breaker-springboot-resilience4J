@@ -2,6 +2,7 @@ package org.example.client.config;
 
 import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;
 import io.github.resilience4j.timelimiter.TimeLimiterConfig;
+import lombok.RequiredArgsConstructor;
 import org.springframework.cloud.circuitbreaker.resilience4j.Resilience4JCircuitBreakerFactory;
 import org.springframework.cloud.circuitbreaker.resilience4j.Resilience4JConfigBuilder;
 import org.springframework.cloud.client.circuitbreaker.Customizer;
@@ -12,14 +13,17 @@ import org.springframework.web.client.RestTemplate;
 import java.time.Duration;
 
 @Configuration
+@RequiredArgsConstructor
 public class ApplicationConfiguration {
+
+//    private final CircuitBreakerRegistry circuitBreakerRegistry;
 
     @Bean
     public RestTemplate getRestTemplate() {
         return new RestTemplate();
     }
 
-    @Bean
+//    @Bean
     public Customizer<Resilience4JCircuitBreakerFactory> globalCustomConfiguration() {
 
         CircuitBreakerConfig circuitBreakerConfig = CircuitBreakerConfig.custom()

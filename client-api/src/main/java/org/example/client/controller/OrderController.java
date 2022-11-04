@@ -2,8 +2,8 @@ package org.example.client.controller;
 
 import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
-import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
+import org.example.client.annotation.CustomRateLimiter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +52,8 @@ public class OrderController {
     }
 
     @GetMapping("/order-rate-limiter")
-    @RateLimiter(name=ORDER_SERVICE, fallbackMethod = "rateLimiterFallback")
+//    @RateLimiter(name=ORDER_SERVICE, fallbackMethod = "rateLimiterFallback")
+    @CustomRateLimiter
     public ResponseEntity<String> createOrderRateLimiter()
     {
         String response = restTemplate.getForObject("http://localhost:8081/payment", String.class);
