@@ -3,7 +3,6 @@ package org.example.client.aspect;
 import io.github.resilience4j.ratelimiter.RateLimiterConfig;
 import io.github.resilience4j.ratelimiter.RateLimiterRegistry;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
@@ -14,10 +13,10 @@ import java.time.Duration;
 public class CustomRateLimiterAspect {
     private RateLimiterRegistry rateLimiterRegistry;
 
-    @Around("@annotation(org.example.client.annotation.CustomRetry)")
+//    @Around("@annotation(org.example.client.annotation.CustomCircuitBreaker)")
     public Object customRateLimiterConfig(ProceedingJoinPoint proceedingJoinPoint){
 
-        System.out.println("customRetryConfig:: Before invoking customRetryConfig() method");
+//        System.out.println("customRetryConfig:: Before invoking customRetryConfig() method");
         Object value = null;
         try {
 
@@ -36,7 +35,7 @@ public class CustomRateLimiterAspect {
             e.printStackTrace();
         }
 
-        System.out.println("customRetryConfig:: After invoking customRetryConfig() method. Return value="+value);
+//        System.out.println("customRetryConfig:: After invoking customRetryConfig() method. Return value="+value);
         return value;
     }
 }

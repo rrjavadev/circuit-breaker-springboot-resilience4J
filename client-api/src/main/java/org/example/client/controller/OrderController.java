@@ -1,8 +1,8 @@
 package org.example.client.controller;
 
 import io.github.resilience4j.bulkhead.annotation.Bulkhead;
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
+import org.example.client.annotation.CustomCircuitBreaker;
 import org.example.client.annotation.CustomRateLimiter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +27,8 @@ public class OrderController {
     private RestTemplate restTemplate;
 
     @GetMapping("/order-circuit-breaker")
-    @CircuitBreaker(name=ORDER_SERVICE, fallbackMethod = "circuitBreakerFallback")
+    @CustomCircuitBreaker
+//    @CircuitBreaker(name=ORDER_SERVICE, fallbackMethod = "circuitBreakerFallback")
     public ResponseEntity<String> createOrder(){
         String response = restTemplate.getForObject("http://localhost:8081/payment", String.class);
         return new ResponseEntity<String>(response, HttpStatus.OK);

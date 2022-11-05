@@ -28,7 +28,7 @@ public class CircuitBreakerDemoConfig {
     @Autowired
     RetryRegistry retryRegistry;
 
-    @Bean
+//    @Bean
     public CircuitBreaker defaultCircuitBreaker() {
 
         CircuitBreakerConfig circuitBreakerConfig = CircuitBreakerConfig.custom()
@@ -51,7 +51,7 @@ public class CircuitBreakerDemoConfig {
         return retryRegistry.retry("serviceName", config);
     }
 
-    @Bean
+//    @Bean
     public CircuitBreakerConfigCustomizer testCustomizer() {
 
         return CircuitBreakerConfigCustomizer
